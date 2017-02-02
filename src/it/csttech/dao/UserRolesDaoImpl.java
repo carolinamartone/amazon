@@ -31,17 +31,17 @@ public class UserRolesDaoImpl implements UserRolesDao{
 	}
 
 	public List<UserRoles> getAllUserRoles(){
-		Query query = sessionFactory.getCurrentSession().createQuery("FROM UserRoles ORDER BY id ASC");
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM UserRoles ORDER BY userRoleId ASC");
 		return query.getResultList();
 		
 	}
 	public UserRoles findByUsername(String username){
-		Query query = sessionFactory.getCurrentSession().createQuery("FROM UserRoles WHERE usernmae='"+username+"'");
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM UserRoles WHERE username='"+username+"'");
 		return (UserRoles) query.getSingleResult();
 	}
 	
 	public UserRoles findById(int user_role_id){
-		Query query = sessionFactory.getCurrentSession().createQuery("FROM UserRoles WHERE id="+user_role_id);
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM UserRoles WHERE userRoleId="+user_role_id);
 		return (UserRoles) query.getSingleResult();
 		
 	}

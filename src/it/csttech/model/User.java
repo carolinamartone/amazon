@@ -3,6 +3,8 @@ package it.csttech.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,6 +19,18 @@ public class User {
 
 	@Column(nullable = false)
 	private boolean active;
+
+	@OneToOne(optional = false, targetEntity = UserRoles.class)
+	@JoinColumn(name = "userRoleId", nullable = false, insertable = false, updatable = false)
+	private UserRoles userRoles;
+
+	public UserRoles getUserRoles() {
+		return userRoles;
+	}
+
+	public void setUserRoles(UserRoles userRoles) {
+		this.userRoles = userRoles;
+	}
 
 	public String getUsername() {
 		return username;
@@ -42,15 +56,18 @@ public class User {
 		this.active = active;
 	}
 
-	public User(String username, String password, boolean active) {
+	public User(String username, String password, boolean active, UserRoles userRoles) {
+		super();
 		this.username = username;
 		this.password = password;
 		this.active = active;
+		this.userRoles = userRoles;
 	}
 
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", password=" + password + ", active=" + active + "]";
+		return "User [username=" + username + ", password=" + password + ", active=" + active + ", userRoles="
+				+ userRoles + "]";
 	}
 
 	public User() {
@@ -81,5 +98,5 @@ public class User {
 			return false;
 		return true;
 	}
-	
+
 }

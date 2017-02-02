@@ -8,5 +8,5 @@ public interface UserRolesDao {
 	List<UserRoles> findbyRole(String role);
 	List<UserRoles> getAllUserRoles();
 	UserRoles findByUsername(String username);
-	UserRoles findById(int user_role_id);
+	UserRoles findById(int userRoleId);
 }
