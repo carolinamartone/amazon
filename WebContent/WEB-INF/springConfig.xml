@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	
+	xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.1.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    "
+    >
+
+	<context:annotation-config></context:annotation-config>
+	<context:component-scan base-package="it.csttech">
+	</context:component-scan>
+
+	<mvc:annotation-driven></mvc:annotation-driven>
+	
+	<!--  
+	Risolve il problema:
+	
+	HTTP Status 500 - Request processing failed; nested exception is org.hibernate.HibernateException: 
+	Could not obtain transaction-synchronized Session for current thread
+	 -->
+    <tx:annotation-driven/>
+
+    <!-- The transaction manager -->
+    <bean id="transactionManager"
+        class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- contiene informazioni sul database -->
+		<property name="dataSource" ref="dataSource" />
+
+		<!-- serve a specificare dove si trova il file di configurazione -->
+		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
+
+		<!-- serve per caricare tutte le classi con annotation @Entity -->
+		<property name="packagesToScan" value="it.csttech.model"></property>
+
+	</bean>
+
+	<bean id="jspViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsps/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="url" value="jdbc:postgresql://localhost:5432/amazon" />
+		<property name="username" value="postgres" />
+		<property name="password" value="postgres" />
+	</bean>
+
+	<bean id="categoryDao" class="it.csttech.dao.CategoryDaoImpl" > 
+		<property name="sessionFactory" ref="sessionFactory"></property> 
+	</bean> 
+	<bean id="categoryManager" class="it.csttech.manager.CategoryManagerImpl" > 
+		<property name="categoryDao" ref="categoryDao"></property> 
+	</bean>
+
+
+</beans>
