@@ -16,8 +16,6 @@ import it.csttech.manager.ArticoloManager;
 import it.csttech.manager.CategoryManager;
 import it.csttech.manager.UserManager;
 import it.csttech.manager.UserRolesManager;
-import it.csttech.model.Articolo;
-import it.csttech.model.Category;
 import it.csttech.model.User;
 import it.csttech.model.UserRoles;
 
@@ -58,8 +56,11 @@ public class UserController {
 	@PostMapping("registrazione")
 	public String registrazione(User user, String username, String password, String password2, ModelMap modelMap,
 			RedirectAttributes redirectAttributes) {
+
+		String ruolo = ""; // FIXME Popoplare
+
 		List<User> users = userManager.getAllUsers();
-		
+
 		if (users.contains(user)) {
 			redirectAttributes.addFlashAttribute("flash",
 					new FlashMessage("username already exists!", FlashMessage.Status.FAILURE));
@@ -71,10 +72,14 @@ public class UserController {
 						 * !user.getRuolo().equals(null) &&
 						 */!user.getPassword().equals(null) && user.getPassword().equals(password2)) {
 				user.setActive(true);
+
+				UserRoles userRoles = new UserRoles(user, ruolo);
+				user.setUserRoles(userRoles);
+
 				userManager.save(user);
 				modelMap.put("user", user);
 				modelMap.put("username", user.getUsername());
-	
+
 				// modelMap.put("nome", user.getNome());
 				// modelMap.put("ruolo", user.getRuolo());
 				modelMap.put("password", user.getPassword());

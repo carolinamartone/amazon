@@ -10,8 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "CATEGORY")
 public class Category {
 
 	@Id
@@ -22,7 +24,7 @@ public class Category {
 	@Column(name = "NAME", insertable = true, nullable = false)
 	private String name;
 
-	@OneToMany(mappedBy = "CATEGORY", fetch = FetchType.EAGER, orphanRemoval = true)
+	@OneToMany(mappedBy = "category", fetch = FetchType.EAGER, orphanRemoval = true)
 	private List<Articolo> listaArticoli = new ArrayList<>();
 
 	public List<Articolo> getListaArticoli() {

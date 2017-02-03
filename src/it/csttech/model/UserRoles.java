@@ -14,40 +14,28 @@ import javax.persistence.Table;
 @Table(name = "USER_ROLES")
 public class UserRoles {
 	@Id
+	@Column(name = "USER_ROLE_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int userRoleId;
+	private Long userRoleId;
 
-	@Column(nullable = false)
-	// TODO: relationship with user
-	public String username;
-
-	@Column(nullable = false)
+	@Column(name = "ROLE", nullable = false)
 	public String role;
 
-	@OneToOne(mappedBy = "userRoles", fetch = FetchType.EAGER, orphanRemoval = true)
-	@JoinColumn(name = "username", nullable = false, insertable = true, unique = true)
+	@OneToOne(optional = false, mappedBy = "userRoles", fetch = FetchType.EAGER, orphanRemoval = true)
+	@JoinColumn(name = "USERNAME", nullable = false, insertable = true, unique = true)
 	private User user;
 
-	public UserRoles(int userRoleId, String username, String role) {
-		this.userRoleId = userRoleId;
-		this.username = username;
+	public UserRoles(User user, String role) {
+		this.user = user;
 		this.role = role;
 	}
 
-	public int getUserRoleId() {
+	public Long getUserRoleId() {
 		return userRoleId;
 	}
 
-	public void setUserRoleId(int userRoleId) {
+	public void setUserRoleId(Long userRoleId) {
 		this.userRoleId = userRoleId;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getRole() {

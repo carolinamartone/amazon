@@ -10,32 +10,32 @@ import it.csttech.dao.UserRolesDao;
 import it.csttech.model.UserRoles;
 
 @Service
-public class UserRolesManagerImpl implements UserRolesManager{
-	
+public class UserRolesManagerImpl implements UserRolesManager {
+
 	@Autowired
 	public UserRolesDao userRolesDao;
-	
+
 	@Override
-	@Transactional(readOnly=true)
-	public List<UserRoles> findbyRole(String role){
+	@Transactional(readOnly = true)
+	public List<UserRoles> findbyRole(String role) {
 		return userRolesDao.findbyRole(role);
 	}
-	
+
 	@Override
-	@Transactional(readOnly=true)
-	public List<UserRoles> getAllUserRoles(){
-		return userRolesDao.getAllUserRoles();	
+	@Transactional(readOnly = true)
+	public List<UserRoles> getAllUserRoles() {
+		return userRolesDao.getAllUserRoles();
 	}
-	
+
 	@Override
-	@Transactional(readOnly=true)
-	public UserRoles findByUsername(String username){
+	@Transactional(readOnly = true)
+	public UserRoles findByUsername(String username) {
 		return userRolesDao.findByUsername(username);
 	}
-	
+
 	@Override
-	@Transactional(readOnly=true)
-	public UserRoles findById(int user_role_id){
+	@Transactional(readOnly = true)
+	public UserRoles findById(int user_role_id) {
 		return userRolesDao.findById(user_role_id);
 	}
 }

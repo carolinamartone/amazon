@@ -25,7 +25,7 @@ public class User {
 	@Column(name = "ACTIVE", nullable = false)
 	private boolean active;
 
-	@OneToOne(optional = false, targetEntity = UserRoles.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(targetEntity = UserRoles.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "USER_ROLE_ID", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "FK_USERS_TO_USER_ROLES"))
 	private UserRoles userRoles;
 
