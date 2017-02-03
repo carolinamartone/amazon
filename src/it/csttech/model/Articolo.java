@@ -1,46 +1,42 @@
 package it.csttech.model;
 
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "ARTICOLO")
+
 public class Articolo {
 	@Id
+	@Column(name = "ID", nullable = false, unique = true, updatable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column
+	@Column(name = "NAME", nullable = false, length = 50, unique = true)
 	private String name;
-	
-	@Column
+
+	@Column(name = "QUANTITA")
 	private Integer quantita;
-	
-	@Column
+
+	@Column(name = "PREZZO")
 	private double prezzo;
-	
-	@Column
+
+	@Column(name = "IMMAGINE_URL", unique = true)
 	private String immagineUrl;
 
-	
-
-	public String getImmagineUrl() {
-		return immagineUrl;
-	}
-
-	public void setImmagineUrl(String immagineUrl) {
-		this.immagineUrl = immagineUrl;
-	}
-
 	@ManyToOne(optional = false, targetEntity = Category.class)
-	@JoinColumn(name = "category_id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "CATEGORY_ID", nullable = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "FK_ARTICOLO_TO_CATEGORY"))
 	private Category category;
 
-	@Column(name = "category_id", nullable = false)
+	@Column(name = "CATEGORY_ID", nullable = false)
 	private Integer categoryId;
 
 	public Integer getCategoryId() {
@@ -94,7 +90,15 @@ public class Articolo {
 	public void setPrezzo(double prezzo) {
 		this.prezzo = prezzo;
 	}
-	
+
+	public String getImmagineUrl() {
+		return immagineUrl;
+	}
+
+	public void setImmagineUrl(String immagineUrl) {
+		this.immagineUrl = immagineUrl;
+	}
+
 	@Override
 	public String toString() {
 		return "Articolo [id=" + id + ", name=" + name + ", quantita=" + quantita + ", prezzo=" + prezzo

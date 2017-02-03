@@ -11,8 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user_roles")
-// @constraint
+@Table(name = "USER_ROLES")
 public class UserRoles {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

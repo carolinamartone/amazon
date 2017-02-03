@@ -1,27 +1,32 @@
 package it.csttech.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "users")
+@Table(name = "USERS")
 public class User {
 
 	@Id
+	@Column(name = "USERNAME", nullable = false, length = 50, unique = true, updatable = false)
 	private String username;
 
-	@Column(nullable = false)
+	@Column(name = "PASSWORD", nullable = false, length = 10)
 	private String password;
 
-	@Column(nullable = false)
+	@Column(name = "ACTIVE", nullable = false)
 	private boolean active;
 
-	@OneToOne(optional = false, targetEntity = UserRoles.class)
-	@JoinColumn(name = "userRoleId", nullable = false, insertable = false, updatable = false)
+	@OneToOne(optional = false, targetEntity = UserRoles.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "USER_ROLE_ID", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "FK_USERS_TO_USER_ROLES"))
 	private UserRoles userRoles;
 
 	public UserRoles getUserRoles() {
