@@ -54,10 +54,10 @@ public class UserController {
 	}
 
 	@PostMapping("registrazione")
-	public String registrazione(User user, String username, String password, String password2, ModelMap modelMap,
+	public String registrazione(User user,String ruolo, String username, String password, String password2, ModelMap modelMap,
 			RedirectAttributes redirectAttributes) {
 
-		String ruolo = ""; // FIXME Popoplare
+		String ruolo = ""; // FIXME Popolare
 
 		List<User> users = userManager.getAllUsers();
 
