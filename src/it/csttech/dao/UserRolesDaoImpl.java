@@ -40,8 +40,8 @@ public class UserRolesDaoImpl implements UserRolesDao{
 		return (UserRoles) query.getSingleResult();
 	}
 	
-	public UserRoles findById(int user_role_id){
-		Query query = sessionFactory.getCurrentSession().createQuery("FROM UserRoles WHERE userRoleId="+user_role_id);
+	public UserRoles findById(int userRoleId){
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM UserRoles WHERE userRoleId="+userRoleId);
 		return (UserRoles) query.getSingleResult();
 		
 	}
