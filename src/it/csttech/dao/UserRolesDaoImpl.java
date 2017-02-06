@@ -47,5 +47,8 @@ public class UserRolesDaoImpl implements UserRolesDao {
 		return (UserRoles) query.getSingleResult();
 
 	}
+	public void save(UserRoles userRoles){
+		sessionFactory.getCurrentSession().saveOrUpdate(userRoles);
+	}
 
 }

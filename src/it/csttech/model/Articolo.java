@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "ARTICOLO")
@@ -28,8 +29,9 @@ public class Articolo {
 
 	@Column(name = "PREZZO")
 	private double prezzo;
-
-	@Column(name = "IMMAGINE_URL", unique = true)
+	// unique =@UniqueConstraint(columnNames = ConstraintMode.CONSTRAINT,
+	// name="UK_ARTICOLO_IMG")
+	@Column(name = "IMMAGINE_URL",unique =true) 
 	private String immagineUrl;
 
 	@ManyToOne(optional = false, targetEntity = Category.class)

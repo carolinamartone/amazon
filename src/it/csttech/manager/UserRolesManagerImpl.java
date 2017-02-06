@@ -38,4 +38,10 @@ public class UserRolesManagerImpl implements UserRolesManager {
 	public UserRoles findById(int user_role_id) {
 		return userRolesDao.findById(user_role_id);
 	}
+	
+	@Override
+	@Transactional
+	public void save(UserRoles userRoles){
+		userRolesDao.save(userRoles);
+	}
 }

@@ -12,4 +12,6 @@ public interface UserRolesManager {
 	UserRoles findByUsername(String username);
 
 	UserRoles findById(int user_role_id);
+	
+	void save(UserRoles userRoles);
 }

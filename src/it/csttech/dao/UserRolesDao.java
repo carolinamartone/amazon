@@ -12,4 +12,6 @@ public interface UserRolesDao {
 	UserRoles findByUsername(String username);
 
 	UserRoles findById(int userRoleId);
+	
+	void save(UserRoles userRoles);
 }

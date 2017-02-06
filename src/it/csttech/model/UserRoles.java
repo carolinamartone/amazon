@@ -18,14 +18,15 @@ public class UserRoles {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userRoleId;
 
-	@Column(name = "ROLE", nullable = false)
-	public String role;
+	@OneToOne(optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
+	@JoinColumn(name = "ROLE_ID", nullable = false, insertable = true)
+	private Role role;
 
-	@OneToOne(optional = false, mappedBy = "userRoles", fetch = FetchType.EAGER, orphanRemoval = true)
+	@OneToOne(optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinColumn(name = "USERNAME", nullable = false, insertable = true, unique = true)
 	private User user;
 
-	public UserRoles(User user, String role) {
+	public UserRoles(User user, Role role) {
 		this.user = user;
 		this.role = role;
 	}
@@ -38,15 +39,23 @@ public class UserRoles {
 		this.userRoleId = userRoleId;
 	}
 
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 
 	public UserRoles() {
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

@@ -14,11 +14,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import it.csttech.FlashMessage;
 import it.csttech.manager.ArticoloManager;
 import it.csttech.manager.CategoryManager;
+import it.csttech.manager.RoleManager;
 import it.csttech.manager.UserManager;
 import it.csttech.manager.UserRolesManager;
+import it.csttech.model.Role;
 import it.csttech.model.User;
 import it.csttech.model.UserRoles;
 
+@SuppressWarnings("unused")
 @Controller
 @RequestMapping("users")
 public class UserController {
@@ -30,6 +33,8 @@ public class UserController {
 	public ArticoloManager articoloManager;
 	@Autowired
 	public UserRolesManager userRolesManager;
+	@Autowired
+	public RoleManager roleManager;
 
 	@GetMapping("")
 	public String listaUsers(ModelMap modelMap) {
@@ -48,16 +53,14 @@ public class UserController {
 	@GetMapping("registrazione")
 	public String formRegistrazione(ModelMap modelMap) {
 		modelMap.addAttribute("submit", "Registrati");
-		List<UserRoles> user_roles = userRolesManager.getAllUserRoles();
-		modelMap.put("user_roles", user_roles);
+		List<Role> roles = roleManager.getAllRoles();
+		modelMap.put("roles", roles);
 		return "formRegistrazione";
 	}
 
 	@PostMapping("registrazione")
-	public String registrazione(User user,String ruolo, String username, String password, String password2, ModelMap modelMap,
+	public String registrazione(User user, Long role_id, String password2, ModelMap modelMap,
 			RedirectAttributes redirectAttributes) {
-
-		String ruolo = ""; // FIXME Popolare
 
 		List<User> users = userManager.getAllUsers();
 
@@ -72,10 +75,6 @@ public class UserController {
 						 * !user.getRuolo().equals(null) &&
 						 */!user.getPassword().equals(null) && user.getPassword().equals(password2)) {
 				user.setActive(true);
-
-				UserRoles userRoles = new UserRoles(user, ruolo);
-				user.setUserRoles(userRoles);
-
 				userManager.save(user);
 				modelMap.put("user", user);
 				modelMap.put("username", user.getUsername());
@@ -84,12 +83,15 @@ public class UserController {
 				// modelMap.put("ruolo", user.getRuolo());
 				modelMap.put("password", user.getPassword());
 				modelMap.put("password2", password2);
+				Role role = roleManager.findById(role_id);
+				UserRoles userRoles = new UserRoles(user, role);
+				userRolesManager.save(userRoles);
 				return "redirect:login";
 			} else {
 				redirectAttributes.addFlashAttribute("flash",
 						new FlashMessage("Passwords don't match!", FlashMessage.Status.FAILURE));
-				redirectAttributes.addFlashAttribute("username", username);
-				redirectAttributes.addFlashAttribute("password", password);
+				redirectAttributes.addFlashAttribute("username", user.getUsername());
+				redirectAttributes.addFlashAttribute("password", user.getPassword());
 				return "redirect:registrazione";
 			}
 

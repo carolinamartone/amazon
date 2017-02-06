@@ -1,14 +1,8 @@
 package it.csttech.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,17 +19,19 @@ public class User {
 	@Column(name = "ACTIVE", nullable = false)
 	private boolean active;
 
-	@OneToOne(targetEntity = UserRoles.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "USER_ROLE_ID", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "FK_USERS_TO_USER_ROLES"))
-	private UserRoles userRoles;
-
-	public UserRoles getUserRoles() {
-		return userRoles;
-	}
-
-	public void setUserRoles(UserRoles userRoles) {
-		this.userRoles = userRoles;
-	}
+	/*
+	 * @OneToOne(targetEntity = UserRoles.class, cascade = CascadeType.ALL,
+	 * fetch = FetchType.EAGER)
+	 * 
+	 * @JoinColumn(name = "USER_ROLE_ID", nullable = false, foreignKey
+	 * = @ForeignKey(value = ConstraintMode.CONSTRAINT, name =
+	 * "FK_USERS_TO_USER_ROLES")) private UserRoles userRoles;
+	 * 
+	 * public UserRoles getUserRoles() { return userRoles; }
+	 * 
+	 * public void setUserRoles(UserRoles userRoles) { this.userRoles =
+	 * userRoles; }
+	 */
 
 	public String getUsername() {
 		return username;
@@ -61,18 +57,15 @@ public class User {
 		this.active = active;
 	}
 
-	public User(String username, String password, boolean active, UserRoles userRoles) {
-		super();
+	public User(String username, String password, boolean active) {
 		this.username = username;
 		this.password = password;
 		this.active = active;
-		this.userRoles = userRoles;
 	}
 
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", password=" + password + ", active=" + active + ", userRoles="
-				+ userRoles + "]";
+		return "User [username=" + username + ", password=" + password + ", active=" + active + "]";
 	}
 
 	public User() {

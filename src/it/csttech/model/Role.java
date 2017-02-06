@@ -11,11 +11,16 @@ import javax.persistence.Table;
 @Table(name = "ROLE")
 public class Role {
 	@Id
+	@Column(name = "ID", nullable = false, unique = true, updatable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "NAME", nullable = false)
 	private String name;
+
+	public Role() {
+		super();
+	}
 
 	public Role(String name) {
 		this.name = name;
