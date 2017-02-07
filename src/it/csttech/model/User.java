@@ -6,17 +6,32 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "users")
+@Table(name = "USERS")
 public class User {
 
 	@Id
+	@Column(name = "USERNAME", nullable = false, length = 50, unique = true, updatable = false)
 	private String username;
 
-	@Column(nullable = false)
+	@Column(name = "PASSWORD", nullable = false, length = 10)
 	private String password;
 
-	@Column(nullable = false)
+	@Column(name = "ACTIVE", nullable = false)
 	private boolean active;
+
+	/*
+	 * @OneToOne(targetEntity = UserRoles.class, cascade = CascadeType.ALL,
+	 * fetch = FetchType.EAGER)
+	 * 
+	 * @JoinColumn(name = "USER_ROLE_ID", nullable = false, foreignKey
+	 * = @ForeignKey(value = ConstraintMode.CONSTRAINT, name =
+	 * "FK_USERS_TO_USER_ROLES")) private UserRoles userRoles;
+	 * 
+	 * public UserRoles getUserRoles() { return userRoles; }
+	 * 
+	 * public void setUserRoles(UserRoles userRoles) { this.userRoles =
+	 * userRoles; }
+	 */
 
 	public String getUsername() {
 		return username;
@@ -81,5 +96,5 @@ public class User {
 			return false;
 		return true;
 	}
-	
+
 }

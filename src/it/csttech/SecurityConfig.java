@@ -14,6 +14,7 @@ import it.csttech.manager.UserManager;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	
 	@Autowired
 	DataSource dataSource;
 	@Autowired

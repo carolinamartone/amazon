@@ -2,59 +2,60 @@ package it.csttech.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user_roles")
+@Table(name = "USER_ROLES")
 public class UserRoles {
 	@Id
+	@Column(name = "USER_ROLE_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="user_role_id")
-	private int userRoleId;
+	private Long userRoleId;
 
-	@Column(nullable = false)
-	//TODO: relationship with user
-	public String username;
+	@OneToOne(optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
+	@JoinColumn(name = "ROLE_ID", nullable = false, insertable = true)
+	private Role role;
 
-	@Column(nullable = false)
-	public String role;
+	@OneToOne(optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
+	@JoinColumn(name = "USERNAME", nullable = false, insertable = true, unique = true)
+	private User user;
 
-	public UserRoles(int userRoleId, String username, String role) {
-		this.userRoleId = userRoleId;
-		this.username = username;
+	public UserRoles(User user, Role role) {
+		this.user = user;
 		this.role = role;
 	}
 
-	public int getUserRoleId() {
+	public Long getUserRoleId() {
 		return userRoleId;
 	}
 
-	public void setUserRoleId(int userRoleId) {
+	public void setUserRoleId(Long userRoleId) {
 		this.userRoleId = userRoleId;
 	}
 
-
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 
 	public UserRoles() {
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }
