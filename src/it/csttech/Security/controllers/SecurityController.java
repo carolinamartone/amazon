@@ -1,4 +1,4 @@
-package it.csttech.controllers;
+package it.csttech.Security.controllers;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
