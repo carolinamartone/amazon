@@ -31,7 +31,7 @@ public class Articolo {
 	private double prezzo;
 	// unique =@UniqueConstraint(columnNames = ConstraintMode.CONSTRAINT,
 	// name="UK_ARTICOLO_IMG")
-	@Column(name = "IMMAGINE_URL",unique =true) 
+	@Column(name = "IMMAGINE_URL",unique =true)
 	private String immagineUrl;
 
 	@ManyToOne(optional = false, targetEntity = Category.class)

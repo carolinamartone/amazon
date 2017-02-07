@@ -1,4 +1,5 @@
 package it.csttech;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,28 +20,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	DataSource dataSource;
 	@Autowired
 	public UserManager userManager;
-	
+
 	@Autowired
 	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 
-	  auth.jdbcAuthentication().dataSource(dataSource)
-		.usersByUsernameQuery(
-			"select username,password, active from users where username=?")
-		.authoritiesByUsernameQuery(
-			"select username, role from user_roles where username=?");
+		auth.jdbcAuthentication().dataSource(dataSource)
+				.usersByUsernameQuery("select username,password,active as enabled from users where username=?")
+				.authoritiesByUsernameQuery(getAuthoritiesQuery());
 	}
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-	  http.authorizeRequests()
-	  	.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-	  	//.antMatchers("/").permitAll()
-		.and().formLogin().loginPage("/login").failureUrl("/login?error")
-		 .usernameParameter("username").passwordParameter("password")
-		.and()
-		  .logout().logoutSuccessUrl("/login?logout") 
-		.and().exceptionHandling().accessDeniedPage("/403")
-		.and().csrf();
+		http.authorizeRequests()
+				//.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+				.antMatchers("/").permitAll()
+				.and().formLogin().loginPage("/login").failureUrl("/login?error").usernameParameter("username")
+				.passwordParameter("password").and().logout().logoutSuccessUrl("/login?logout").and()
+				.exceptionHandling().accessDeniedPage("/403").and().csrf();
+	}
+
+	private String getAuthoritiesQuery() {
+		return " SELECT DISTINCT(u.username),r.name as role FROM users u"
+				+ "INNER JOIN user_roles ur ON u.username = ur.username" + "INNER JOIN role r  ON r.id=ur.role_id"
+				+ "WHERE u.username=?";
 	}
 }
