@@ -40,9 +40,9 @@ table.inner {
 		<table align="center" cellpadding="10">
 			<tr>
 				<td>Select a Role</td>
-				<td><select name="user_roles_id">
-						<c:forEach var="user_roles" items="${user_roles}">
-							<option value="${user_roles.getUserRoleId()}">${user_roles.getRole()}</option>
+				<td><select name="role_id">
+						<c:forEach var="role" items="${roles}">
+							<option value="${role.getId()}">${role.getName()}</option>
 						</c:forEach>
 				</select></td>
 			</tr>

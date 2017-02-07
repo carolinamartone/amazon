@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import it.csttech.model.Articolo;
 import it.csttech.model.Category;
 
@@ -70,7 +70,8 @@ public class ArticoloDaoImpl implements ArticoloDao {
 
 	@SuppressWarnings("unchecked")
 	public List<Articolo> getAllArticoliOfCategory(Category category) {
-		Query query = sessionFactory.getCurrentSession().createQuery("FROM Articolo WHERE category_id=" + category.getId());
+		Query query = sessionFactory.getCurrentSession()
+				.createQuery("FROM Articolo WHERE category_id=" + category.getId());
 
 		List<Articolo> articoli = query.getResultList();
 		return articoli;
