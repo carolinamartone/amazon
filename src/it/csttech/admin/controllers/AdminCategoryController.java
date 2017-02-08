@@ -1,4 +1,4 @@
-package it.csttech.controllers;
+package it.csttech.admin.controllers;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import it.csttech.model.Category;
 
 @Controller
 //@RequestMapping("categories")
-public class CategoryController {
+public class AdminCategoryController {
 	@Autowired
 	public CategoryManager categoryManager;
 	
@@ -36,7 +36,7 @@ public void setCategoryManager(CategoryManager categoryManager) {
 	this.categoryManager = categoryManager;
 }
 
-	@RequestMapping(value="categories", method=RequestMethod.GET)
+	@RequestMapping(value="admin/categories", method=RequestMethod.GET)
 	public String listaCategories(ModelMap modelMap){
 		List<Category> categories=categoryManager.getAllCategories();
 		List<Articolo> articoli=articoloManager.getAllArticoli();
@@ -45,10 +45,10 @@ public void setCategoryManager(CategoryManager categoryManager) {
 		List<Category> categories2=categoryManager.getAllCategories();
 		modelMap.put("categories2", categories2);
 //		modelMap.addAttribute("heading","AllCategories");
-		return "listaCategories";
+		return "/admin/category/listaCategories";
 	}
 	
-	@RequestMapping(value="categories/{id}", method=RequestMethod.GET)
+	@RequestMapping(value="admin/categories/{id}", method=RequestMethod.GET)
 	public String showDetails(@PathVariable int id,ModelMap modelMap){
 		Category category = categoryManager.findById(id);
 		modelMap.put("category",category);
@@ -57,7 +57,7 @@ public void setCategoryManager(CategoryManager categoryManager) {
 		modelMap.put("categories", categories);
 		modelMap.put("articoli",articoli);
 		//modelMap.addAttribute("heading","CategoryDetails");
-		return "category-details";	
+		return "/admin/category/category-details";	
 	}
 	
 	@GetMapping("admin/categories/create")
@@ -67,7 +67,7 @@ public void setCategoryManager(CategoryManager categoryManager) {
 		List<Category> categories=categoryManager.getAllCategories();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli",articoli);
-		return "formCreateCategory";
+		return "/admin/articolo/formCreateCategory";
 	}
 	
 	@RequestMapping(value="admin/categories",method = RequestMethod.POST)
@@ -78,14 +78,14 @@ public void setCategoryManager(CategoryManager categoryManager) {
 		modelMap.put("articoli",articoli);
 		if(categories.contains(category)){
 			redirectAttributes.addFlashAttribute("flash",new FlashMessage("Category already exists!",FlashMessage.Status.FAILURE));	
-			return "redirect:create";
+			return "redirect:/admin/categories/create";
 		}
 		else{
 			categoryManager.save(category);
 			List<Category> categories2=categoryManager.getAllCategories();
 			modelMap.put("categories2", categories2);
 			redirectAttributes.addFlashAttribute("flash",new FlashMessage("Category added!",FlashMessage.Status.SUCCESS));
-			return "redirect:/categories";
+			return "redirect:/admin/categories";
 		
 		}
 		
@@ -103,7 +103,7 @@ public void setCategoryManager(CategoryManager categoryManager) {
 		List<Category> categories=categoryManager.getAllCategories();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli",articoli);
-		return "formUpdateCategory";	
+		return "/admin/category/formUpdateCategory";	
 	}
 	
 	@RequestMapping(value="admin/categories/update",method= RequestMethod.POST)
@@ -114,7 +114,7 @@ public void setCategoryManager(CategoryManager categoryManager) {
 		List<Category> categories=categoryManager.getAllCategories();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli",articoli);
-		return "redirect:/categories";	
+		return "redirect:/admin/category/categories";	
 	}
 	
 	@RequestMapping(value="admin/categories/{id}/delete",method=RequestMethod.GET)
@@ -129,15 +129,15 @@ public void setCategoryManager(CategoryManager categoryManager) {
 		List<Category> categories=categoryManager.getAllCategories();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli",articoli);
-        return "redirect:/categories";	
+        return "redirect:/admin/categories";	
 	}
-	@RequestMapping("categories/{id}/articoli")
+	@RequestMapping("admin/categories/{id}/articoli")
 	public String getAllArticoliOfCategory (@PathVariable int id,ModelMap modelMap){
 		List<Articolo> articoli =articoloManager.getAllArticoliOfCategory(categoryManager.findById(id));
 		modelMap.put("articoli", articoli);
 		List<Category> categories=categoryManager.getAllCategories();
 		modelMap.put("categories", categories);
-		return "listaArticoliCategory";
+		return "/admin/category/listaArticoliCategory";
 	}
 }
 	

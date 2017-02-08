@@ -10,6 +10,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import it.csttech.admin.controllers.AdminCategoryController;
+import it.csttech.model.Articolo;
 import it.csttech.model.Category;
 
 

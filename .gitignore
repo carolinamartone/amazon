@@ -1,5 +1,7 @@
 /build/
 /target/
 /lib/
+/.project
+/.classpath
 /.classpath
 /.project

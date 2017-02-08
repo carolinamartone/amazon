@@ -1,4 +1,4 @@
-package it.csttech.controllers;
+package it.csttech.admin.controllers;
 
 import java.util.List;
 
@@ -21,24 +21,24 @@ import it.csttech.model.Category;
 
 @Controller
 //@RequestMapping("articoli")
-public class ArticoloController {
+public class AdminArticoloController {
 	@Autowired
 	public ArticoloManager articoloManager;
 	@Autowired
 	public CategoryManager categoryManager;
 	
 	
-	@GetMapping("articoli")
+	@GetMapping("admin/articoli")
 	public String listaArticoli(ModelMap modelMap){
 		List<Articolo> articoli=articoloManager.getAllArticoli();
 		List<Category> categories=categoryManager.getAllCategories();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli",articoli);
 		
-		return "listaArticoli";
+		return "/admin/articolo/listaArticoli";
 	}
 	
-	@GetMapping("articoli/{id}")
+	@GetMapping("/admin/articoli/{id}")
 	public String getDetails(@PathVariable int id,ModelMap modelMap){
 		Articolo articolo = articoloManager.findById(id);
 		modelMap.put("articolo", articolo);
@@ -46,7 +46,7 @@ public class ArticoloController {
 		List<Category> categories=categoryManager.getAllCategories();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli",articoli);
-		return "articolo-details";
+		return "/admin/articolo/articolo-details";
 	}
 	
 	@GetMapping("admin/articoli/create")
@@ -56,7 +56,7 @@ public class ArticoloController {
 		modelMap.put("categories", categories);
 		modelMap.put("articoli",articoli);
 		modelMap.addAttribute("submit","Add");
-		return "formCreateArticolo";
+		return "/admin/articolo/formCreateArticolo";
 	}
 	
 	@RequestMapping(value="admin/articoli",method = RequestMethod.POST)
@@ -67,7 +67,7 @@ public class ArticoloController {
 		List<Category> categories=categoryManager.getAllCategories();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli",articoli);
-		return "redirect:/articoli";
+		return "redirect:/admin/articoli";
 		
 	}
 	
@@ -81,7 +81,7 @@ public class ArticoloController {
 		List<Category> categories=categoryManager.getAllCategories();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli",articoli);
-		return "redirect:/articoli";
+		return "redirect:/admin/articoli";
 	}
 	
 	@GetMapping("admin/articoli/{id}/update")
@@ -92,7 +92,7 @@ public class ArticoloController {
 		List<Category> categories=categoryManager.getAllCategories();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli",articoli);
-		return "formUpdateArticolo";
+		return "/admin/articolo/formUpdateArticolo";
 	}
 	
 	@RequestMapping(value="admin/articoli/update",method = RequestMethod.POST)
@@ -102,7 +102,7 @@ public class ArticoloController {
 		List<Category> categories=categoryManager.getAllCategories();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli",articoli);
-		return "redirect:/articoli";
+		return "redirect:/admin/articoli";
 		
 	}
 	
