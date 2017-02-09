@@ -6,8 +6,9 @@
     </Console>
   </Appenders>
   <Loggers>
-  	<Logger name="org.springframework" level="trace" additivity="false"/>
-    <Root level="trace">
+  	<Logger name="org.springframework" level="info" additivity="false"/>
+  	<Logger name="it.csttech" level="info" additivity="false"/>
+    <Root level="error">
       <AppenderRef ref="Console"/>
     </Root>
   </Loggers>

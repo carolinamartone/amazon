@@ -39,7 +39,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <c:forEach var="category" items="${categories}">
-           <li><a href="/Amazon/categories/${category.getId()}/articoli">${category.getName()}</a></li>
+           <li><a href="/Amazon/admin/categories/${category.getId()}/articoli">${category.getName()}</a></li>
             </c:forEach>
           </ul>
         </li>
@@ -47,7 +47,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Articoli<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <c:forEach var="articolo" items="${articoli}">
-           <li><a href="/Amazon/articoli/${articolo.getId()}">${articolo.getName()}</a></li>
+           <li><a href="/Amazon/admin/articoli/${articolo.getId()}">${articolo.getName()}</a></li>
             </c:forEach>
           </ul>
         </li>
