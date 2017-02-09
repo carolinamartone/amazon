@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.query.internal.QueryParameterBindingsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -77,6 +78,12 @@ public class ArticoloDaoImpl implements ArticoloDao {
 		return articoli;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Articolo>searchByString(String string){
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM Articolo WHERE name LIKE '"+string+"'%");
+		List<Articolo> articoli= query.getResultList();
+		return articoli;
+	}
 	public void save(Articolo articolo) {
 		/*
 		 * int maxId=0; for(Articolo articolo2:allArticoli){
@@ -100,5 +107,6 @@ public class ArticoloDaoImpl implements ArticoloDao {
 		// session.close();
 
 	}
+	
 
 }

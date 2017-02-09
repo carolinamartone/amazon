@@ -12,41 +12,45 @@ import it.csttech.model.Articolo;
 import it.csttech.model.Category;
 
 @Service
-public class ArticoloManagerImpl implements ArticoloManager
-{
+public class ArticoloManagerImpl implements ArticoloManager {
 	@Autowired
 	public ArticoloDao articoloDao;
-	
+
 	@Override
-	@Transactional(readOnly = true )
-	public Articolo findById(int id){
+	@Transactional(readOnly = true)
+	public Articolo findById(int id) {
 		return articoloDao.findById(id);
 	}
-	
+
 	@Override
-	@Transactional(readOnly = true )
-	public List<Articolo> getAllArticoli(){
-		return articoloDao.getAllArticoli();	
-	}
-	
-	@Override
-	@Transactional(readOnly = true )
-	public List<Articolo> getAllArticoliOfCategory(Category category){
-		return articoloDao.getAllArticoliOfCategory(category);
-	}
-	@Override
-	@Transactional(readOnly = false)
-	public void save (Articolo articolo){
-		articoloDao.save(articolo);
-		
+	@Transactional(readOnly = true)
+	public List<Articolo> getAllArticoli() {
+		return articoloDao.getAllArticoli();
 	}
 
-	
 	@Override
-	@Transactional(readOnly = false,propagation = Propagation.REQUIRES_NEW)
-	public void delete(Articolo articolo){
+	@Transactional(readOnly = true)
+	public List<Articolo> getAllArticoliOfCategory(Category category) {
+		return articoloDao.getAllArticoliOfCategory(category);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Articolo> searchByString(String string) {
+		return articoloDao.searchByString(string);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public void save(Articolo articolo) {
+		articoloDao.save(articolo);
+
+	}
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	public void delete(Articolo articolo) {
 		articoloDao.delete(articolo);
-		
+
 	}
 }
-	
