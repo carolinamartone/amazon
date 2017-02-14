@@ -5,11 +5,10 @@ import java.util.List;
 import it.csttech.model.Articolo;
 import it.csttech.model.Category;
 
-public interface ArticoloManager {
-	Articolo findById(int id);
-	List<Articolo> getAllArticoli();
+public interface ArticoloManager extends BaseManager<Articolo> {
 	List<Articolo>getAllArticoliOfCategory(Category category);
 	List<Articolo>searchByString(String string);
-	void save(Articolo articolo);
+	void insert(Articolo articolo);
+	void update(Articolo articolo);
 	void delete(Articolo articolo);
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.csttech.FlashMessage;
@@ -27,8 +28,8 @@ public class AdminArticoloController {
 
 	@GetMapping("admin/articoli")
 	public String listaArticoli(ModelMap modelMap) {
-		List<Articolo> articoli = articoloManager.getAllArticoli();
-		List<Category> categories = categoryManager.getAllCategories();
+		List<Articolo> articoli = articoloManager.findAll();
+		List<Category> categories = categoryManager.findAll();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli", articoli);
 
@@ -39,8 +40,8 @@ public class AdminArticoloController {
 	public String getDetails(@PathVariable int id, ModelMap modelMap) {
 		Articolo articolo = articoloManager.findById(id);
 		modelMap.put("articolo", articolo);
-		List<Articolo> articoli = articoloManager.getAllArticoli();
-		List<Category> categories = categoryManager.getAllCategories();
+		List<Articolo> articoli = articoloManager.findAll();
+		List<Category> categories = categoryManager.findAll();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli", articoli);
 		return "/admin/articolo/articolo-details";
@@ -48,8 +49,8 @@ public class AdminArticoloController {
 
 	@GetMapping("admin/articoli/create")
 	public String formCreate(ModelMap modelMap) {
-		List<Articolo> articoli = articoloManager.getAllArticoli();
-		List<Category> categories = categoryManager.getAllCategories();
+		List<Articolo> articoli = articoloManager.findAll();
+		List<Category> categories = categoryManager.findAll();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli", articoli);
 		modelMap.addAttribute("submit", "Add");
@@ -58,11 +59,11 @@ public class AdminArticoloController {
 
 	@RequestMapping(value = "admin/articoli", method = RequestMethod.POST)
 	public String create(Articolo articolo, ModelMap modelMap, RedirectAttributes redirectAttributes) {
-		articoloManager.save(articolo);
+		articoloManager.insert(articolo);
 		redirectAttributes.addFlashAttribute("flash",
 				new FlashMessage("Articolo aggiunto!", FlashMessage.Status.SUCCESS));
-		List<Articolo> articoli = articoloManager.getAllArticoli();
-		List<Category> categories = categoryManager.getAllCategories();
+		List<Articolo> articoli = articoloManager.findAll();
+		List<Category> categories = categoryManager.findAll();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli", articoli);
 		return "redirect:/admin/articoli";
@@ -75,8 +76,8 @@ public class AdminArticoloController {
 		articoloManager.delete(articolo);
 		redirectAttributes.addFlashAttribute("flash",
 				new FlashMessage("Articolo eliminato!", FlashMessage.Status.SUCCESS));
-		List<Articolo> articoli = articoloManager.getAllArticoli();
-		List<Category> categories = categoryManager.getAllCategories();
+		List<Articolo> articoli = articoloManager.findAll();
+		List<Category> categories = categoryManager.findAll();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli", articoli);
 		return "redirect:/admin/articoli";
@@ -86,8 +87,8 @@ public class AdminArticoloController {
 	public String formUpdate(@PathVariable int id, ModelMap modelMap) {
 		Articolo articolo = articoloManager.findById(id);
 		modelMap.put("articolo", articolo);
-		List<Articolo> articoli = articoloManager.getAllArticoli();
-		List<Category> categories = categoryManager.getAllCategories();
+		List<Articolo> articoli = articoloManager.findAll();
+		List<Category> categories = categoryManager.findAll();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli", articoli);
 		return "/admin/articolo/formUpdateArticolo";
@@ -95,9 +96,9 @@ public class AdminArticoloController {
 
 	@RequestMapping(value = "admin/articoli/update", method = RequestMethod.POST)
 	public String update(Articolo articolo, ModelMap modelMap) {
-		articoloManager.save(articolo);
-		List<Articolo> articoli = articoloManager.getAllArticoli();
-		List<Category> categories = categoryManager.getAllCategories();
+		articoloManager.insert(articolo);
+		List<Articolo> articoli = articoloManager.findAll();
+		List<Category> categories = categoryManager.findAll();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli", articoli);
 		return "redirect:/admin/articoli";
@@ -109,11 +110,11 @@ public class AdminArticoloController {
 		return "/admin/articolo/formSearchArticolo";
 	}
 
-	@RequestMapping(value = "admin/articoli/searchArticolo", method = RequestMethod.POST)
-	public String search(String string, ModelMap modelMap) {
+	@RequestMapping(value = "admin/search", method = RequestMethod.GET)
+	public String search(@RequestParam("s") String string,ModelMap modelMap) {
 		List<Articolo> articoli = articoloManager.searchByString(string);
 		modelMap.put("articoli", articoli);
-		return "/admin/listaArticoliSearchedByString";
+		return "/admin/articolo/listaArticoliSearchedByString";
 
 	}
 }

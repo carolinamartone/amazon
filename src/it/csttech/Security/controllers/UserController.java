@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.csttech.FlashMessage;
 import it.csttech.manager.ArticoloManager;
+import it.csttech.manager.BaseManager;
 import it.csttech.manager.CategoryManager;
 import it.csttech.manager.RoleManager;
 import it.csttech.manager.UserManager;
@@ -35,10 +36,12 @@ public class UserController {
 	public UserRolesManager userRolesManager;
 	@Autowired
 	public RoleManager roleManager;
+	
+
 
 	@GetMapping("")
 	public String listaUsers(ModelMap modelMap) {
-		List<User> users = userManager.getAllUsers();
+		List<User> users = userManager.findAll();
 		modelMap.put("users", users);
 		return "listaUsers";
 	}
@@ -53,7 +56,7 @@ public class UserController {
 	@GetMapping("registrazione")
 	public String formRegistrazione(ModelMap modelMap) {
 		modelMap.addAttribute("submit", "Registrati");
-		List<Role> roles = roleManager.getAllRoles();
+		List<Role> roles = roleManager.findAll();
 		modelMap.put("roles", roles);
 		return "formRegistrazione";
 	}
@@ -62,7 +65,7 @@ public class UserController {
 	public String registrazione(User user, Long role_id, String password2, ModelMap modelMap,
 			RedirectAttributes redirectAttributes) {
 
-		List<User> users = userManager.getAllUsers();
+		List<User> users = userManager.findAll();
 
 		if (users.contains(user)) {
 			redirectAttributes.addFlashAttribute("flash",
@@ -75,7 +78,7 @@ public class UserController {
 						 * !user.getRuolo().equals(null) &&
 						 */!user.getPassword().equals(null) && user.getPassword().equals(password2)) {
 				user.setActive(true);
-				userManager.save(user);
+				userManager.insert(user);
 				modelMap.put("user", user);
 				modelMap.put("username", user.getUsername());
 
@@ -85,7 +88,7 @@ public class UserController {
 				modelMap.put("password2", password2);
 				Role role = roleManager.findById(role_id);
 				UserRoles userRoles = new UserRoles(user, role);
-				userRolesManager.save(userRoles);
+				userRolesManager.insert(userRoles);
 				return "redirect:login";
 			} else {
 				redirectAttributes.addFlashAttribute("flash",

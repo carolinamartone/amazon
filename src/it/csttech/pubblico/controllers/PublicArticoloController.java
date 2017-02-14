@@ -23,8 +23,8 @@ public class PublicArticoloController {
 
 	@GetMapping("articoli")
 	public String listaArticoli(ModelMap modelMap) {
-		List<Articolo> articoli = articoloManager.getAllArticoli();
-		List<Category> categories = categoryManager.getAllCategories();
+		List<Articolo> articoli = articoloManager.findAll();
+		List<Category> categories = categoryManager.findAll();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli", articoli);
 
@@ -35,8 +35,8 @@ public class PublicArticoloController {
 	public String getDetails(@PathVariable int id, ModelMap modelMap) {
 		Articolo articolo = articoloManager.findById(id);
 		modelMap.put("articolo", articolo);
-		List<Articolo> articoli = articoloManager.getAllArticoli();
-		List<Category> categories = categoryManager.getAllCategories();
+		List<Articolo> articoli = articoloManager.findAll();
+		List<Category> categories = categoryManager.findAll();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli", articoli);
 		return "/public/articolo/articolo-details";

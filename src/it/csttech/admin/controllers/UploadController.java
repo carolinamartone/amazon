@@ -77,7 +77,7 @@ public class UploadController {
 				articolo.setPrezzo(Double.parseDouble(s[4]));
 				articolo.setQuantita(Integer.parseInt(s[3]));
 				log.info("sto aggiungendo l'articolo" + articolo);
-				articoloManager.save(articolo);
+				articoloManager.insert(articolo);
 			}
 			br.close();
 		} catch (IOException io) {

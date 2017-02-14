@@ -4,14 +4,11 @@ import java.util.List;
 
 import it.csttech.model.UserRoles;
 
-public interface UserRolesDao {
-	List<UserRoles> findbyRole(String role);
 
-	List<UserRoles> getAllUserRoles();
+public interface UserRolesDao extends BaseDao<UserRoles>
+{
+    List<UserRoles> findbyRole(String role);
 
-	UserRoles findByUsername(String username);
+    UserRoles findByUsername(String username);
 
-	UserRoles findById(int userRoleId);
-	
-	void save(UserRoles userRoles);
 }

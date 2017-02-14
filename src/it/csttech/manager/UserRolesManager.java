@@ -4,14 +4,13 @@ import java.util.List;
 
 import it.csttech.model.UserRoles;
 
-public interface UserRolesManager {
-	List<UserRoles> findbyRole(String role);
 
-	List<UserRoles> getAllUserRoles();
+public interface UserRolesManager extends BaseManager<UserRoles>
+{
+    List<UserRoles> findbyRole(String role);
 
-	UserRoles findByUsername(String username);
+    UserRoles findByUsername(String username);
+    
+    void insert (UserRoles userRoles);
 
-	UserRoles findById(int user_role_id);
-	
-	void save(UserRoles userRoles);
 }

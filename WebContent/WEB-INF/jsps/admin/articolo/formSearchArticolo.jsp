@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form role="search" method="get" class="search-form" action="<?php echo home_url( '/' ); ?>">
+<form role="search" method="GET" class="search-form" action="/Amazon/admin/search">
   <label>
     <span class="screen-reader-text">Cerca:</span>
     <input type="search" class="search-field" placeholder="Cerca ..." value="" name="s" title="Cerca:" />

@@ -33,11 +33,11 @@ public class PublicCategoryController {
 
 	@RequestMapping(value = "categories", method = RequestMethod.GET)
 	public String listaCategories(ModelMap modelMap) {
-		List<Category> categories = categoryManager.getAllCategories();
-		List<Articolo> articoli = articoloManager.getAllArticoli();
+		List<Category> categories = categoryManager.findAll();
+		List<Articolo> articoli = articoloManager.findAll();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli", articoli);
-		List<Category> categories2 = categoryManager.getAllCategories();
+		List<Category> categories2 = categoryManager.findAll();
 		modelMap.put("categories2", categories2);
 		// modelMap.addAttribute("heading","AllCategories");
 		return "/public/category/listaCategories";
@@ -47,8 +47,8 @@ public class PublicCategoryController {
 	public String showDetails(@PathVariable int id, ModelMap modelMap) {
 		Category category = categoryManager.findById(id);
 		modelMap.put("category", category);
-		List<Articolo> articoli = articoloManager.getAllArticoli();
-		List<Category> categories = categoryManager.getAllCategories();
+		List<Articolo> articoli = articoloManager.findAll();
+		List<Category> categories = categoryManager.findAll();
 		modelMap.put("categories", categories);
 		modelMap.put("articoli", articoli);
 		// modelMap.addAttribute("heading","CategoryDetails");
@@ -59,7 +59,7 @@ public class PublicCategoryController {
 	public String getAllArticoliOfCategory(@PathVariable int id, ModelMap modelMap) {
 		List<Articolo> articoli = articoloManager.getAllArticoliOfCategory(categoryManager.findById(id));
 		modelMap.put("articoli", articoli);
-		List<Category> categories = categoryManager.getAllCategories();
+		List<Category> categories = categoryManager.findAll();
 		modelMap.put("categories", categories);
 		return "/public/category/listaArticoliCategory";
 	}
