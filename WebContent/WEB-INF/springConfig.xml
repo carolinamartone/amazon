@@ -63,10 +63,10 @@
 		<property name="password" value="postgres" />
 	</bean>
 
-	<bean id="categoryDao" class="it.csttech.dao.CategoryDaoImpl" > 
+	<bean id="categoryDao" class="it.csttech.dao.hibernate.CategoryDaoImpl" > 
 		<property name="sessionFactory" ref="sessionFactory"></property> 
 	</bean> 
-	<bean id="categoryManager" class="it.csttech.manager.CategoryManagerImpl" > 
+	<bean id="categoryManager" class="it.csttech.manager.hibernate.CategoryManagerImpl" > 
 		<property name="categoryDao" ref="categoryDao"></property> 
 	</bean>
 	

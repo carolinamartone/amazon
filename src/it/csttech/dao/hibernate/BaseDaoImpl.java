@@ -5,6 +5,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,34 +34,35 @@ public class BaseDaoImpl<T extends Object> implements BaseDao<T>
     }
 
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<T> findAll()
     {
-        // TODO Auto-generated method stub
-        return null;
+        @SuppressWarnings("rawtypes")
+        Query query = sessionFactory.getCurrentSession().createQuery("FROM "+entityClass.getName());
+        List<T> all = query.getResultList();
+        return all;
     }
 
 
     @Override
     public void insert(T t)
     {
-        // TODO Auto-generated method stub
-        
+      sessionFactory.getCurrentSession().save(t);
     }
 
 
     @Override
     public void update(T t)
     {
-        // TODO Auto-generated method stub
-        
+       sessionFactory.getCurrentSession().update(t);
     }
 
 
     @Override
     public void delete(T t)
     {
-        // TODO Auto-generated method stub
+       sessionFactory.getCurrentSession().delete(t);
         
     }
 

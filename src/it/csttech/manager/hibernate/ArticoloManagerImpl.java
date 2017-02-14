@@ -14,28 +14,27 @@ import it.csttech.model.Category;
 
 
 @Service
-public class ArticoloManagerImpl extends BaseManagerImpl<Articolo>implements ArticoloManager
+public class ArticoloManagerImpl extends BaseManagerImpl<Articolo> implements ArticoloManager
 {
     @Autowired
     public ArticoloDao articoloDao;
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<Articolo> getAllArticoliOfCategory(Category category)
     {
         return articoloDao.getAllArticoliOfCategory(category);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<Articolo> searchByString(String string)
     {
         return articoloDao.searchByString(string);
     }
 
-
     @Override
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void delete(Articolo articolo)
     {
         articoloDao.delete(articolo);
@@ -43,16 +42,18 @@ public class ArticoloManagerImpl extends BaseManagerImpl<Articolo>implements Art
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void insert(Articolo articolo)
     {
-        // TODO Auto-generated method stub
-        
+        articoloDao.insert(articolo);
+
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void update(Articolo articolo)
     {
-        // TODO Auto-generated method stub
-        
+        articoloDao.insert(articolo);
+
     }
 }

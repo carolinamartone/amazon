@@ -81,7 +81,7 @@ public void setCategoryManager(CategoryManager categoryManager) {
 			return "redirect:/admin/categories/create";
 		}
 		else{
-			categoryManager.save(category);
+			categoryManager.insert(category);
 			List<Category> categories2=categoryManager.findAll();
 			modelMap.put("categories2", categories2);
 			redirectAttributes.addFlashAttribute("flash",new FlashMessage("Category added!",FlashMessage.Status.SUCCESS));
@@ -108,7 +108,7 @@ public void setCategoryManager(CategoryManager categoryManager) {
 	
 	@RequestMapping(value="admin/categories/update",method= RequestMethod.POST)
 	public String update(Category category,ModelMap modelMap,RedirectAttributes redirectAttributes ){
-		categoryManager.save(category);
+		categoryManager.insert(category);
 		redirectAttributes.addFlashAttribute("flash",new FlashMessage("Category updated!",FlashMessage.Status.SUCCESS));
 		List<Articolo> articoli=articoloManager.findAll();
 		List<Category> categories=categoryManager.findAll();

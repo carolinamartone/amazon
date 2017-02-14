@@ -17,8 +17,8 @@ public class CategoryManagerImpl extends BaseManagerImpl<Category> implements Ca
     public CategoryDao categoryDao;
 
     @Override
-    @Transactional(readOnly = false)
-    public void save(Category category)
+    @Transactional(readOnly = false,propagation = Propagation.REQUIRED)
+    public void insert(Category category)
     {
         categoryDao.insert(category);
     }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.csttech.dao.UserDao;
@@ -19,24 +20,25 @@ public class UserManagerImpl extends BaseManagerImpl<User> implements UserManage
     public UserDao userDao;
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public User findByUsername(String username)
     {
         return userDao.findByUsername(username);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<User> findByPassword(String password)
     {
         return userDao.findByPassword(password);
     }
 
     @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public void insert(User user)
     {
         userDao.insert(user);
-        
+
     }
 
 }
