@@ -1,7 +1,7 @@
 package it.csttech.manager.hibernate;
 
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
+
 import java.util.List;
 
 import org.hibernate.SessionFactory;
